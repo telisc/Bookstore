@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Button1").click(function () {
+            $("#Button1").css("background-color", "yellow");
+        });
+        $("#Button2").click(function () {
+            $.ajax({
+                url: "./Home/SaySomething/",
+                context: document.body
+            }).done(function (msg) {
+                $('#Button2').prop('value', msg)
+            });
+        });
+    });
+</script>
+<div class="jumbotron">
+    <h4>Telis Cosmas </h4> 
+    <h3>MVC </h3>
+    <h3>Entity Framework(Code First)</h3> 
+    <h3>Microsoft Azure </h3>
+    <p><a href="~/Customer" class="btn btn-primary btn-lg">Goto Customer CRUD - Pagenated grid - Searchable &raquo;</a></p>
+    <p><a href="~/Author" class="btn btn-primary btn-lg">Goto Authors CRUD &raquo;</a></p>
+    <p><a href="~/Book" class="btn btn-primary btn-lg">Goto Books CRUD &raquo;</a></p>
+    <p><a href="~/Publisher" class="btn btn-primary btn-lg">Goto Publisher CRUD &raquo;</a></p>
+</div>
+<div class="jumbotron">
+    <h2>JQuery etc</h2>
+    <input id="Button2" type="button" value="JQuery Ajax calling Web API" class="btn btn-primary btn-lg" />
+    <input id="Button1" type="button" value="JQuery test change color" class="btn btn-primary btn-sm btnChangeColor" />
+</div>
+
