@@ -15,6 +15,23 @@
                 $('#Button2').prop('value', msg)
             });
         });
+        $("#Button3").click(function () {
+            $.ajax({
+                dataType: "json",
+                url: "../api/BookWebApi",
+                context: document.body
+            }).done(function (data) {
+                var items = [];
+                $.each(data, function (key, val) {
+                    items.push("<li id='" + key + "'>" + "Book Title= " +val.Title +  " Publish Year= " + val.publishYear +  "</li>");
+                });
+
+                $("<ul/>", {
+                    "class": "my-new-list",
+                    html: items.join("")
+                }).appendTo($("#book_list"));
+            });
+        });
     });
 </script>
 <div class="jumbotron">
@@ -28,7 +45,9 @@
     <p><a href="~/Publisher" class="btn btn-primary btn-lg">Goto Publisher CRUD &raquo;</a></p>
 </div>
 <div class="jumbotron">
+    <div class="book-list" id="book_list"></div>
     <h2>JQuery etc</h2>
+    <input id="Button3" type="button" value="JQuery Ajax calling Web API get Books" class="btn btn-primary btn-lg" />
     <input id="Button2" type="button" value="JQuery Ajax calling Web API" class="btn btn-primary btn-lg" />
     <input id="Button1" type="button" value="JQuery test change CSS" class="btn btn-primary btn-sm btnChangeColor" />
 </div>
