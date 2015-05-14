@@ -16,5 +16,10 @@ namespace Bookstore.Controllers
             IBookRepository _bookRepository = new BookRepository(new BookContext());
             return _bookRepository.GetBooks();
         }
+        public Book Get(int id)
+        {
+            IBookRepository _bookRepository = new BookRepository(new BookContext());
+            return _bookRepository.GetBookByID(id);
+        }
     }
 }

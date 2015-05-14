@@ -41,6 +41,7 @@ namespace Bookstore.Controllers
         [HttpPost]
         public ActionResult Create(Customer customer)
         {
+            ModelState.AddModelError("LastName", "Mytesteror");
             if (ModelState.IsValid)
             {
                 _repository.Add(customer);
