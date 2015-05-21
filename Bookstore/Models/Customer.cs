@@ -9,13 +9,13 @@ namespace Bookstore.Models
     public class Customer:IEntity 
     {
         [Key]
-        public int Id { get; set; }
+        public String CustomerID { get; set; }
 
         [Required]
         [MaxLength(50)]
-        public String FirstName { get; set; }
-        public String LastName { get; set; }
-        public String DateOfBirth { get; set; }
+        public String ContactName { get; set; }
+        public String ContactTitle { get; set; }
+        public String Country { get; set; }
         public String City { get; set; }
     }
 }

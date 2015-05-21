@@ -26,9 +26,9 @@ namespace Bookstore.Controllers
             else
             {
                 Page_No = 1;
-                result = _repository.List.ToList().Where(x => x.FirstName.ToUpper() == Search_Data.ToUpper()).ToList();
+                result = _repository.List.ToList().Where(x => x.ContactName.ToUpper() == Search_Data.ToUpper()).ToList();
             }
-            int Size_Of_Page = 2;
+            int Size_Of_Page = 5;
             int No_Of_Page = (Page_No ?? 1);
             return View(result.ToPagedList(No_Of_Page, Size_Of_Page));
 

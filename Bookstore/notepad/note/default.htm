@@ -1,0 +1,276 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div style="background-color:lightblue">
+        <p>
+
+            <br />declare @date_from datetime, @date_to datetime
+            <br /> set @date_from = '07/01/1996'
+            <br /> set @date_to = '07/30/1996'
+            <br /> ;with dates as(
+            <br /> select @date_from as dt
+            <br /> union all
+            <br /> select DATEADD(d,1,dt) from dates where dt<@date_to )
+       <br />                                                     select count(orderid) as numoforders,month(dt) as themonth,day(dt) as theday
+       <br />                                                     ,sum(freight) as total_freight
+       <br />                                                     from dates
+       <br />                                                     left outer join orders
+       <br />                                                     on cast(cast(orderdate as date) as datetime)=dates.dt
+       <br />                                                     -- only show no order days where orders.Freight is null
+       <br />                                                     group by dates.dt
+       <br />
+
+        </p>
+    </div>
+    <p>
+
+        <br />SELECT	year(CAST(orderdate AS DATETIME)) from orders
+        <br />where year(CAST(CAST(orderdate AS DATE) AS DATETIME)) = 1996
+    </p>
+    <div style="background-color:lightblue">
+        <p>
+            <br />find  the order with max amount
+            <br /> - first get list of all orders and their sums
+            <br /> - second get the max of above
+            <br />- match the max of above from the list of first query
+            <br />
+            <br />select query1.*
+            <br />from (
+            <br />select orderid,sum((unitprice* quantity ) - discount) as total_amt
+            <br />from [order details]
+            <br />group by orderid
+            <br />)	query1,
+            <br />(SELECT MAX(query2.total_amt) AS highest_amt
+            <br />FROM (SELECT orderid, sum((unitprice* quantity ) - discount)  AS total_amt
+            <br />FROM [order details]
+            <br />GROUP BY [order details].OrderID ) query2) query3
+            <br />WHERE query1.total_amt = query3.highest_amt;
+        </p>
+    </div>
+    <p>
+        <br />UPDATE Gender SET sex = CASE sex WHEN 'm' THEN 'f' ELSE 'm' END
+        <br />alter table employees add refferred_by int null
+    </p>
+    <div style="background-color:lightblue">
+        <br />with s as (
+        <br />select query1.*
+        <br />from (
+        <br />select orderid,sum((unitprice* quantity ) - discount) as total_amt
+        <br />from [order details]
+        <br />group by orderid
+        <br />)	query1,
+        <br />(SELECT MAX(query2.total_amt) AS highest_amt
+        <br />FROM (SELECT orderid, sum((unitprice* quantity ) - discount) AS total_amt
+        <br />FROM [order details]
+        <br />GROUP BY [order details].OrderID ) query2) query3
+        <br />WHERE query1.total_amt = query3.highest_amt)
+        <br />select s.orderid,total_amt ,ord.CustomerID,ord.EmployeeID ,emp.FirstName,emp.refferred_by ,reff.FirstName as referrer  from s
+        <br />join [orders] ord on s.orderid= ord.orderid
+        <br />join [customers] cust
+        <br />on cust.customerid=ord.CustomerID
+        <br />join employees emp on emp.EmployeeID = ord.EmployeeID
+        <br />left outer join Employees reff
+        <br />on emp.refferred_by  = reff.EmployeeID
+    </div>
+
+
+    <div style="background-color:lightblue">
+        <p>
+            <br /> select e.employeeid,e.FirstName ,r.EmployeeID as refferedid, r.FirstName as refferredby from employees e
+            <br />left outer join employees r
+            <br />on e.employeeid=r.refferred_by
+            <br />where r.refferred_by is not null
+        </p>
+    </div>
+
+    <p>select * from information_schema.columns where table_name = 'employees'</p>
+    <p>SELECT * FROM information_schema.tables</p>
+    <p>select case city when 'Seattle' then 'OOP' ELSE city end from employees</p>
+
+    <p>
+        <br />select * from [order details] where productid in (
+        <br />select productid from products where unitprice = (select max(unitprice) from products))
+
+
+        <br />create table dbo.Customers
+        <br />(id int PRIMARY KEY NOT NULL,
+        <br />Name char(50) NOT NULL,
+        <br />ReferredBy int null)
+
+    </p>
+    <p>
+        <br />with s as(
+        <br />select orderid,sum(unitprice * quantity - discount) as ordertotal
+        <br />from [order details]
+        <br />where orderid in (
+        <br />select orderid from [order details] where productid in (
+        <br />select productid from products where unitprice = (select max(unitprice) from products))
+        <br />group by orderid)
+        <br />group by orderid)
+        <br />select max(ordertotal) from s
+
+        <br />SELECT * FROM [EmployeeDetail] WHERE Salary BETWEEN 500000 AND 600000
+        <br />
+        <br />SELECT TOP 1 Salary FROM
+        <br />(
+        <br />SELECT TOP 2 Salary FROM [EmployeeDetail] ORDER BY Salary DESC
+        <br />) T ORDER BY Salary ASC
+        <br />
+        <br />SELECT UPPER(SUBSTRING(FirstName,1,1))+LOWER(SUBSTRING(FirstName,2,LEN(FirstName)-1)) AS [FirstName]
+        <br />from employees
+        <br />
+        <br />---stuff all field records in one
+        <br />SELECT STUFF(( SELECT  ', ' + E.FirstName FROM [employees] AS E FOR XML PATH('')), 1, 2, '') AS [All Emp Name]
+
+        <br /><b><a href="https://msdn.microsoft.com/en-us/library/ms187928.aspx">Conversions</a></b>
+        <br />
+        <br /> DECLARE @myval varchar(50);
+        <br /> SET @myval = '01/01/2000 14:00:20';
+        <br /> SELECT CAST(@myval AS datetime);
+        <br />
+        <br />select top(2) * from Customers
+
+        <br />DECLARE @myval decimal (5, 2);
+        <br />SET @myval = 193.57;
+        <br />SELECT CAST(CAST(@myval AS varbinary(20)) AS decimal(10,5));
+        <br />-- Or, using CONVERT
+        <br />SELECT CONVERT(decimal(10,5), CONVERT(varbinary(20), @myval));
+        <br />
+        <br />select * from customers c
+        <br />where exists
+        <br />(select * from suppliers s where c.City = s.City)
+        <br />
+        <br />
+        <br />select count(customerid) from customers c
+        <br />where city not in
+        <br />(select city from suppliers s where c.City = s.City)
+        <br />
+        <br />select convert(varchar(20),GetDate(),112)
+        <br />
+        <br />
+        <br />CURSOR
+        <br />DECLARE @name VARCHAR(50)
+        <br />DECLARE db_cursor CURSOR FOR
+        <br />SELECT name
+        <br />FROM MASTER.dbo.sysdatabases
+        <br />WHERE name NOT IN ('master','model','msdb','tempdb')
+        <br />
+        <br />OPEN db_cursor
+        <br />FETCH NEXT FROM db_cursor INTO @name
+        <br />
+        <br />WHILE @@FETCH_STATUS = 0
+        <br />BEGIN
+        <br />SET @fileName = @path + @name + '_' + @fileDate + '.BAK'
+        <br />PRINT 'database is ' +  @fileName
+        <br />FETCH NEXT FROM db_cursor INTO @name
+        <br />END
+        <br />
+        <br />CLOSE db_cursor
+        <br />DEALLOCATE db_cursor
+        <br />
+        <br />
+        <br />if (select sum(p.UnitsInStock) from products p )<200000
+        <br />        print 'Running low'
+        <br />  go
+        <br />
+        <br />============================
+        <br />CREATE PROCEDURE spGetTitle
+        <br />   @employeeID INT,
+        <br />   @Title Varchar(50) OUTPUT
+        <br />AS
+        <br />BEGIN
+        <br />   SELECT title
+        <br />   FROM employees
+        <br />   WHERE EmployeeID = @employeeID
+        <br />END
+        <br />
+        <br />declare @empTitle as varchar(50);
+        <br />exec spGetTitle 1,@empTitle ;
+        <br />
+        <br />
+        <br />
+
+        <br /> select  o.OrderID,(o.Freight  + SUM((od.UnitPrice*od.Quantity)-od.discount )) as OrderTotal
+        <br /> from orders o
+        <br />inner join [Order Details] od
+        <br />on o.OrderID = od.OrderID
+        <br />group by o.OrderID,o.Freight
+        <br />
+        <br />
+        <br />
+        <br />CREATE FUNCTION CalculateOrderTotal(@OrderID INT)
+        <br /> RETURNS MONEY
+        <br />BEGIN
+        <br />declare @OrderTotal as MONEY;
+        <br />SELECT  @OrderTotal =
+        <br />(o.Freight  + SUM((od.UnitPrice*od.Quantity)-od.discount ))
+        <br />from [Orders]  o
+        <br />inner join [Order Details] od
+        <br />on o.OrderID = od.OrderID
+        <br />and o.orderId=@OrderID
+        <br />group by o.OrderID,o.Freight ;
+        <br />return @OrderTotal;
+        <br />END;
+        <br />GO
+        <br />
+        <br />
+        <br />DECLARE @ret Money= NULL;
+        <br />exec @ret = CalculateOrderTotal 10353
+        <br />print @ret
+        <br />
+        <br />
+        <br />MAX
+        <br />
+<br /> 					select query1.*
+<br />  					from (
+<br />  							select o.OrderID,(o.Freight + SUM((od.UnitPrice*od.Quantity)-od.discount )) as total_amt
+<br />  							from orders o
+<br />  							inner join [Order Details] od
+<br />  							on o.OrderID = od.OrderID
+<br />  						group by o.OrderID,o.Freight
+<br />  				)query1,
+<br />  		(SELECT MAX(query2.total_amt) AS highest_amt
+<br />  		from (select o.OrderID,(o.Freight + SUM((od.UnitPrice*od.Quantity)-od.discount )) as total_amt
+<br />  		from orders o
+<br />  		inner join [Order Details] od
+<br />  		on o.OrderID = od.OrderID
+<br />  		group by o.OrderID,o.Freight
+<br />  		)
+<br />  		query2
+<br />  	) query3
+<br />  	WHERE query1.total_amt = query3.highest_amt;
+ 
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />  
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+
+    </p>
+    <br />
+</body>
+<br />
+</html>
+<br />
+<br />

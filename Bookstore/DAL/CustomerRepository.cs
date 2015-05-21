@@ -42,10 +42,16 @@ namespace Bookstore.DAL
 
          }
 
-         public Customer FindByID(int Id)
+         public Customer FindByID(String Id)
          {
-             var result = (from r in _context.Customers where r.Id == Id select r).FirstOrDefault();
+             var result = (from r in _context.Customers where r.CustomerID == Id select r).FirstOrDefault();
              return result;
          }
+         public Customer FindByID(int Id)
+         {
+             var result = (from r in _context.Customers where r.CustomerID == "CACTU" select r).FirstOrDefault();
+             return result;
+         }
+
     }
 }
