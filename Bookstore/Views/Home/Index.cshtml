@@ -1,13 +1,19 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
+<link href="~/Content/Site.css" rel="stylesheet" />
+<link href="~/Content/jquery-ui.css" rel="stylesheet" />
 <script src="~/Scripts/jquery-1.10.2.min.js"></script>
 <script src="~/Scripts/underscore.js" type="text/javascript"></script>
 <script src="~/Scripts/json2.js" type="text/javascript"></script>
 <script src="~/Scripts/backbone.js" type="text/javascript"></script>
 <script src="~/Scripts/Bookmodel.js" type="text/javascript"></script>
-
+<script src="~/Scripts/jquery-ui.js"></script>
 <script>
+    $(function () {
+        $.noConflict();
+        $("input:text.date").datepicker({ dateFormat: "d" });
+    });
     function bootstrapRead(bookid) {
         // Now let us try to retrieve a book [READ]
         var book1 = new Book({ ID: bookid });
@@ -80,7 +86,7 @@
                 <input id="Button4" type="button" value="BackBone API get Book by ID" class="btn btn-primary btn-lg" />
                 <div class="col-sm-10">
                     <label class="col-sm-2 control-label">Book Id:</label>
-                    <input class="form-control" id="bookidInput" type="text" value="">
+                    <input class="form-control date" id="bookidInput" type="text" value="">
                     <label class="col-sm-2 control-label" id="Booktitle"></label>
                 </div>
             </div>
