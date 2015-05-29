@@ -29,6 +29,9 @@
     }
 
     $(document).ready(function () {
+        $("#Button5").click(function () {
+            window.location = "/backboneTest/backbonerectangles.html";
+        });
         $("#Button1").click(function () {
             $("#Button1").css("background-color", "yellow");
         });
@@ -92,6 +95,7 @@
             </div>
         </p>
         </form> 
+        <p><input id="Button5" type="button" value="Backbone Rectangle" class="btn btn-primary btn-lg" />              </p>
         <p><input id="Button2" type="button" value="JQuery Ajax calling Web API" class="btn btn-primary btn-lg" />              </p>
         <p><input id="Button1" type="button" value="JQuery test change CSS" class="btn btn-primary btn-sm btnChangeColor" />    </p>
 </div>

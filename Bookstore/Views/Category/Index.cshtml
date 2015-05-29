@@ -1,0 +1,59 @@
+﻿@model IEnumerable<Bookstore.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<div id="TestDiv">this is a div</div>
+<div id="divContent" class="lead">This div content will be replaced if you click the below button.</div>
+<div id="divLoading" class="divhide">
+    <img src="~/Content/images/ui-icons_228ef1_256x240.png" alt="" class="progress" />
+</div>
+
+
+<script>
+    function onAjaxBegin() {
+        alert("test");
+        $("#divLoading").removeClass("divhide").addClass("divShow");
+    }
+
+    function onAjaxComplete() {
+        $("#divLoading").removeClass("divShow").addClass("divhide");
+    }
+</script>
+
+@Ajax.ActionLink("Do Ajax Call..", "DoAjax", new AjaxOptions
+{
+    UpdateTargetId = "divContent",
+    LoadingElementId = "divLoading",
+    OnBegin = "onAjaxBegin",
+    OnComplete = "onAjaxComplete"
+})
+
+
+
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div style="height:300px;background-image:url('https://scontent-lga1-1.cdninstagram.com/hphotos-xaf1/t51.2885-15/11311648_831138706956289_1619703938_n.jpg')">
+    aaa
+</div>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CategoryName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    @Html.Partial("Category", item);
+}
+
+</table>

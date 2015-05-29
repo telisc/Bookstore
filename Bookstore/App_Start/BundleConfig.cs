@@ -15,8 +15,8 @@ namespace Bookstore
                         "~/Scripts/jquery.validate*"));
 
             //telis
-            bundles.Add(new ScriptBundle("~/bundles/jquery.ui").Include(
-                        "~/Scripts/jquery.ui*"));
+            //bundles.Add(new ScriptBundle("~/bundles/jquery.ui").Include(
+            //            "~/Scripts/jquery.ui*"));
 
             //end telis
             

@@ -182,6 +182,7 @@
     <Compile Include="Controllers\AuthorController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BookWebApiController.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -191,6 +192,8 @@
     <Compile Include="DAL\AuthorRepository.cs" />
     <Compile Include="DAL\BookContext.cs" />
     <Compile Include="DAL\BookRepository.cs" />
+    <Compile Include="DAL\CategoryContext.cs" />
+    <Compile Include="DAL\CategoryRepository.cs" />
     <Compile Include="DAL\CourseContext.cs" />
     <Compile Include="DAL\CourseRepository.cs" />
     <Compile Include="DAL\CustomerContext.cs" />
@@ -203,6 +206,7 @@
     <Compile Include="DAL\Product.cs" />
     <Compile Include="DAL\PublisherContext.cs" />
     <Compile Include="DAL\PublisherRepository.cs" />
+    <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Course.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="DAL\StudentContext.cs" />
@@ -232,6 +236,7 @@
     <Content Include="App_Data\GeneralDatabase_log.ldf">
       <DependentUpon>GeneralDatabase.mdf</DependentUpon>
     </Content>
+    <Content Include="backboneTest\backbonerectangles.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\ui-bg_diagonals-thick_18_b81900_40x40.png">
@@ -265,6 +270,7 @@
     <Content Include="notepad\note\default.htm" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\backbone.marionette.js" />
+    <Content Include="Scripts\backboneRectangles.js" />
     <Content Include="Scripts\Bookmodel.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -276,11 +282,19 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui.js" />
     <Content Include="Scripts\jquery-ui.min.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
+    <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\json2.js" />
+    <Content Include="Scripts\MicrosoftAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcAjax.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.debug.js" />
+    <Content Include="Scripts\MicrosoftMvcValidation.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -342,6 +356,8 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Student\Index.cshtml" />
     <Content Include="Views\Student\Create.cshtml" />
+    <Content Include="Views\Category\Index.cshtml" />
+    <Content Include="Views\Shared\Category.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
